@@ -1,0 +1,2016 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Register právnických osôb, podnikateľov a orgánov verejnej moci",
+    "description": "<img alt=\"Logo ŠÚSR\" src=\"https://slovak.statistics.sk/wps/portal/ext/home/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NLPyCXA08QxwD3IO8TAwNTEz1wwkpiAJKG-AAjgZA_VFgJc7ujh4m5j4GBhY-7qYGno4eoUGWgcbGBo7GUAV4zCjIjTDIdFRUBADse0bP/dz/d5/L2dBISEvZ0FBIS9nQSEh/images/logo.png\">\n<p>Verejné REST API rozhranie pre poskytovanie dát z Registra<br>\nprávnických osôb, podnikateľov a orgánov verejnej moci<br>\n(ďalej ako „RPO“). Správcom informačného systému RPO<br>\nje Štatistický úrad Slovenskej republiky (ŠÚ SR).</p>\n<p>Aktualizácia údajov REST API prebieha denne v nočných hodinách.</p>\n<p>Technické detaily k jednotlivým volaniam nájdete po kliknutí na jednotlivé <em>Response</em> kódy, napr. <em>200 OK</em>. V odpovedi sú zasielané len tie atribúty, ktoré majú hodnotu rozdielnu od <em>null</em>.</p>\n<p>Pravdivostné parametre (typu <em>boolean</em>) jednotlivých volaní sú vyhodnocované tak, že iba hodnota <code>true</code> (bez ohľadu na veľkosť písmen) je akceptovaná ako pravda (<em>true</em>) a akákoľvek iná hodnota je vyhodnotená ako nepravda (<em>false</em>). Tzn. ak je, napríklad, pri volaní <em>Detail PO</em> potrebné zaradiť do výsledku aj historické záznamy, zadanie parametra musí byť <code>showHistoricalData=true</code>. Prípadné zadanie <code>showHistoricalData=ano</code> bude vyhodnotené ako <code>false</code>, t.j. historické dáta nebudú zahrnuté vo výsledku.</p>\n<h5>Zoznam číselníkov</h5>\n<p>Vybrané atribúty, ktoré sú typu <a href=\"#/data-structures/0/code-value\"><code>CodeValue</code></a> alebo\n<a href=\"#/data-structures/0/timed-code-value\"><code>TimedCodeValue</code></a>, obsahujú okrem svojej hodnoty (<code>.value</code>) aj číselníkový\nkód (<code>.code</code>) a označenie číselníka, z ktorého hodnota pochádza (<code>.codelistCode</code>). Jednotlivé číelníky, okrem\nčíselníkov UCE a STA, ktoré sú v gescii Ministerstva vnútra SR ako správcu RFO, sú pre referenciu dostupné na\nnasledujúcich adresách:</p>\n<ul>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2936\">CL000025: Lokálna štatistická územná jednotka 2 – obec</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2941\">CL000056: Právna forma organizácie</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2955\">CL000062: Titul pred menom</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2938\">CL000063: Titul za menom</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2960\">CL000086: Krajina OSN</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2948\">CL005205: Ekonomická činnosť</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010010=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010010: Inštitucionálne subsektory ESÚ 2010</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2949\">CL010108: Právny stav organizácie</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2950\">CL010109: Typ zainteresovanej osoby</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2951\">CL010110: Typ organizačnej jednotky</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2952\">CL010111: Druh akcie</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010112=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010112: Zdrojový register</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2953\">CL010113: Typ štatutárneho orgánu</a></p>\n</li>\n<li>\n<p>CL000083: Jednotka meny</p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2990\">CL010141: Časť obce</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010430=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010430: Konečný užívateľ výhod v zmysle AML zákona</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010470=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010470: Funkcia člena kolektívneho štatutárneho orgánu</a></p>\n</li>\n<li>\n<p>príp. plný zoznam číselníkov na <a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/\">stránke ŠÚ SR</a> alebo na <a href=\"https://metais.vicepremier.gov.sk/codelists/publiclist\">stránke MetaIS</a></p>\n</li>\n</ul>\n<h5>Kompletný export registra právnických osôb</h5>\n<p>V príade záujmu je možné stiahnuť si kompletný export údajov z registra právnických osôb. Exportované súbory\nsú verejne prístupné na objektovom úložisku, ktoré je sprístupnené cez Amazon S3 kompatibilné API na\nendpointe: <br> <a href=\"https://frkqbrydxwdp.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/susr-rpo/\">https://frkqbrydxwdp.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/susr-rpo/</a></p>\n<p>Export pozostáva z dvoch typov súborov:</p>\n<ul>\n<li>\n<p>Súbory inicializačnej dávky majú prefix &quot;<code>batch-init/</code>&quot; a mennú konvenciu <code>init_yyyy-mm-dd_nnn.json.gz</code>, kde\n<code>yyyy-mm-dd</code> je dátum exportovania dávky a <code>nnn</code> je poradové číslo súboru v dávke. Tieto súbory obsahujú kompletný\nexport všetkých údajov RPO ku danému dňu, a sú generované raz mesačne (prvá sobota v mesiaci).</p>\n</li>\n<li>\n<p>Súbory dennej dávky majú prefix &quot;<code>batch-daily/</code>&quot; a mennú konvenciu <code>actual_yyyy-mm-dd.json.gz</code>, kde <code>yyyy-mm-dd</code>\nje dátum exportovania dávky. Tieto súbory obsahujú iba záznamy, ktoré boli do RPO pridané alebo zmenené od poslednej\ndennej dávky.</p>\n</li>\n</ul>\n<p>Súbory obsahujú kompletné aktuálne záznamy subjektov v systéme RPO v JSON štruktúre, ktorá je popísaná v časti\n<a href=\"#/reference/0/detaily-po\">Detaily PO -&gt; Response (Object)</a>. Rozdiel v štruktúre je iba v atribútoch <code>dbModificationDate</code> a\n<code>license</code>, ktoré v exportovaných súboroch nie sú prítomné. Na objektovom úložisku sú k dispozícii inicializačné a denné\ndávky za posledných 45 dní.</p>\n<h6>Vytvorenie vlastnej kópie registra</h6>\n<p>Pre vytvorenie vlastnej kópie registra právnických osôb je potrebné:</p>\n<ol>\n<li>Importovať všetky súbory z najnovšej inicializačnej dávky. Napr. pre dávku z 3.7.2021, ktorá pozostáva z 20 súborov, to\nbude:<br>\n<code>batch-init/init_2021-07-03_001.json.gz</code><br>\n<code>batch-init/init_2021-07-03_002.json.gz</code><br>\n...<br>\n<code>batch-init/init_2021-07-03_020.json.gz</code><br></li>\n<li>Po jednom importovať všetky aktualizačné dávky, ktoré majú dátum <em>neskorší</em> (nie rovnaký) ako iniciálna dávka. Napr.:<br>\n<code>batch-daily/actual_2021-07-04.json.gz</code><br>\n<code>batch-daily/actual_2021-07-05.json.gz</code><br>\n... atď., až po najnovší súbor<br></li>\n</ol>\n<h5>Licencia pre použitie údajov RPO:</h5>\n<ol>\n<li>\n<p>ŠÚ SR ako správca informačného systému RPO uplatňuje na použitie sprístupnených údajov z RPO uvedených v\n§ 7 ods. 2 a § 7a ods. 4 zákona č. 272/2015 Z. z. o registri právnických osôb, podnikateľov a orgánov\nverejnej moci a o zmene a doplnení niektorých zákonov (ďalej len „zákon o registri právnických osôb&quot;)\nmedzinárodnú verejnú licenciu Creative Commons Attribution License (cc-by) 4.0 (ďalej len „verejná licencia&quot;).</p>\n</li>\n<li>\n<p>Predmetom verejnej licencie sú sprístupnené údaje z RPO prostredníctvom webového sídla ŠÚ SR v zmysle § 7 ods. 2\na § 7a ods. 4 zákona o registri právnických osôb.</p>\n</li>\n<li>\n<p>ŠÚ SR udeľuje súhlas na použitie predmetu verejnej licencie a výkon licencovaných práv („licencia&quot;)\npodľa vyššie citovanej verejnej licencie.</p>\n</li>\n</ol>",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://api.statistics.sk/rpo/v1/",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "summary": "Vyhľadávanie PO",
+        "description": "<p>Volanie, ktoré vráti zoznam právnických osôb, podnikateľov a orgánov verejnej moci (ďalej ako „PO“) vyhovujúci zadaným parametrom.</p>\n<p>Pri volaní je nutné uviesť aspoň jeden z vyhľadávacích filtrov, inak volanie vráti odpoveď typu <code>400: Bad Request</code>.\nPokiaľ je uvedených viac filtrov, volanie vráti záznamy, ktoré vyhovujú všetkým (t.j.\n<code>condition1 AND condition2 AND condition3</code>). Celková dĺžka volania (context path + parametre) však nesmie presiahnuť 2000 znakov.\nVolanie vráti maximálne 500 nájdených záznamov.</p>\n<p>Vstupné parametre, pri ktorých nie je uvedené fulltextové vyhľadávanie, sa porovnávajú na presnú\nzhodu. Všetky dátumy musia byť vo formáte <code>YYYY-MM-DD</code>, inak volanie vráti <code>400: Bad Request</code>.</p>\n<p>Vo vyznačených textových poliach sa vyhľadáva fulltextovo - zadaný text sa hľadá kdekoľvek v poli, bez ohľadu\nna veľkosť písmen alebo diakritiku (dĺžne, mäkčene). Hľadaný text pritom musí byť dlhý minimálne\n3 znaky. V prípade, že parameter nemá aspoň tri znaky, nebude vyhľadávaný fulltextovo, ale iba na presnú zhodu. Fulltextové vyhľadávanie je nastavené tak, aby v bežných prípadoch našlo užívateľovi čo\nnajviac relevantných výsledkov. Niektoré okrajové prípady sa preto odchyľujú od vyhľadávania na presnú\nzhodu - napr. znaky ®, ™, ©, € či iné multi-byte znaky nie sú považované za vlastnú súčasť slova, a\nich vynechanie či zahrnutie neovplyvní výsledok.</p>\n<p>Fulltextové vyhľadávanie je založené na <a href=\"https://docs.oracle.com/en/database/oracle/oracle-database/21/ccref/oracle-text-SQL-statements-and-operators.html#GUID-827A6E7D-106E-4341-9398-2FF6ABB05E59\">Oracle Text CONTAINS</a>,\na správa sa podľa tejto implementácie. Význam <a href=\"https://docs.oracle.com/en/database/oracle/oracle-database/21/ccref/special-characters-in-oracle-text-queries.html#GUID-4639581C-7F65-4C9E-96CE-0A7EAA10086F\">rezervovaných slov a znakov operátora CONTAINS</a>\nsa však neaplikuje, a spoločne so zvyškom výrazu sú posudzované ako vyhľadávaný text.</p>",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "query",
+            "description": "<p>IČO (pole <code>identifiers[*].value</code>)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "38123456"
+            }
+          },
+          {
+            "name": "fullName",
+            "in": "query",
+            "description": "<p>Plný názov PO (<code>fullNames[*].value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "The Company"
+            }
+          },
+          {
+            "name": "legalForm",
+            "in": "query",
+            "description": "<p>Právna forma (<code>legalForms[*].value.value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Spoločnosť s ručením obmedzeným"
+            }
+          },
+          {
+            "name": "legalStatus",
+            "in": "query",
+            "description": "<p>Právny stav PO (<code>legalStatuses[*].value.value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "V reštrukturalizácii"
+            }
+          },
+          {
+            "name": "addressMunicipality",
+            "in": "query",
+            "description": "<p>Adresa sídla PO - obec (<code>addresses[*].municipality.value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Bratislava"
+            }
+          },
+          {
+            "name": "addressStreet",
+            "in": "query",
+            "description": "<p>Adresa sídla PO - ulica (<code>addresses[*].street</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Bajkalská"
+            }
+          },
+          {
+            "name": "establishmentAfter",
+            "in": "query",
+            "description": "<p>Dátum vzniku od, vrátane (<code>establishment</code>)</p>\n",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "establishmentBefore",
+            "in": "query",
+            "description": "<p>Dátum vzniku do, vrátane (<code>establishment</code>)</p>\n",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2021-01-01"
+            }
+          },
+          {
+            "name": "terminationAfter",
+            "in": "query",
+            "description": "<p>Dátum zániku od, vrátane (<code>termination</code>)</p>\n",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "terminationBefore",
+            "in": "query",
+            "description": "<p>Dátum zániku do, vrátane (<code>termination</code>)</p>\n",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2021-01-01"
+            }
+          },
+          {
+            "name": "onlyActive",
+            "in": "query",
+            "description": "<p>Hľadať iba aktívne záznamy (<code>termination == null</code>)</p>\n",
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "example": "true"
+            }
+          },
+          {
+            "name": "dbModificationDateAfter",
+            "in": "query",
+            "description": "<p>Dátum poslednej zmeny od, vrátane (<code>dbModificationDate</code>)</p>\n",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "dbModificationDateBefore",
+            "in": "query",
+            "description": "<p>Dátum poslednej zmeny do, vrátane (<code>dbModificationDate</code>)</p>\n",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2021-01-01"
+            }
+          },
+          {
+            "name": "mainActivity",
+            "in": "query",
+            "description": "<p>Údaje o hlavnej ekonomickej činnosti PO (<code>statisticalCodes.mainActivity.value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Ostatný maloobchod mimo predajní"
+            }
+          },
+          {
+            "name": "esa2010",
+            "in": "query",
+            "description": "<p>Údaj o zaradení PO do európskeho systému účtov (<code>statisticalCodes.esa2010.value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Národné súkromné nefinančné korporácie"
+            }
+          },
+          {
+            "name": "sourceRegister",
+            "in": "query",
+            "description": "<p>Zdrojový register (<code>sourceRegister.value.value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Obchodný register"
+            }
+          },
+          {
+            "name": "stakeholderType",
+            "in": "query",
+            "description": "<p>Typ zainteresovanej osoby (<code>stakeholders[*].stakeholderType.value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Člen dozorného orgánu"
+            }
+          },
+          {
+            "name": "stakeholderPersonGivenName",
+            "in": "query",
+            "description": "<p>Meno zainteresovanej osoby (<code>stakeholders[*].personName.givenNames[*]</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Peter"
+            }
+          },
+          {
+            "name": "stakeholderPersonFamilyName",
+            "in": "query",
+            "description": "<p>Priezvisko zainteresovanej osoby (<code>stakeholders[*].personName.familyNames[*]</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Hruška"
+            }
+          },
+          {
+            "name": "stakeholderCompanyName",
+            "in": "query",
+            "description": "<p>Plný názov PO ako zainteresovanej osoby (<code>stakeholders[*].fullName</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "The Company"
+            }
+          },
+          {
+            "name": "statutoryBodyType",
+            "in": "query",
+            "description": "<p>Typ štatutárneho orgánu (<code>statutoryBodies[*].stakeholderType.value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Člen dozorného orgánu"
+            }
+          },
+          {
+            "name": "statutoryBodyGivenName",
+            "in": "query",
+            "description": "<p>Meno štatutárneho orgánu (<code>statutoryBodies[*].personName.givenNames[*]</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Peter"
+            }
+          },
+          {
+            "name": "statutoryBodyFamilyName",
+            "in": "query",
+            "description": "<p>Priezvisko štatutárneho orgánu (<code>statutoryBodies[*].personName.familyNames[*]</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Hruška"
+            }
+          },
+          {
+            "name": "statutoryBodyCompanyName",
+            "in": "query",
+            "description": "<p>Plný názov PO ako štatutárneho orgánu (<code>statutoryBodies[*].fullName</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "The Company"
+            }
+          },
+          {
+            "name": "orgUnitsIdentifier",
+            "in": "query",
+            "description": "<p>IČO organizačnej zložky (pole <code>.organizationUnits[*].identifier</code>)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "38123456"
+            }
+          },
+          {
+            "name": "orgUnitsFullName",
+            "in": "query",
+            "description": "<p>Plný názov organizačnej zložky (<code>organizationUnits[*].fullNames[*].value</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "The Company"
+            }
+          },
+          {
+            "name": "orgUnitsStakeholderPersonGivenName",
+            "in": "query",
+            "description": "<p>Meno zainteresovanej osoby organizačnej zložky (<code>organizationUnits[*].stakeholders[*].personName.givenNames[*]</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Peter"
+            }
+          },
+          {
+            "name": "orgUnitsStakeholderPersonFamilyName",
+            "in": "query",
+            "description": "<p>Priezvisko zainteresovanej osoby organizačnej zložky (<code>organizationUnits[*].stakeholders[*].personName.familyNames[*]</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "Hruška"
+            }
+          },
+          {
+            "name": "orgUnitsStakeholderCompanyName",
+            "in": "query",
+            "description": "<p>Plný názov PO ako zainteresovanej osoby organizačnej zložky (<code>organizationUnits[*].stakeholders[*].fullName</code> fulltextové hľadanie)</p>\n",
+            "schema": {
+              "type": "string",
+              "example": "The Company"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "Zoznam nájdených PO",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "Jedinedinečný identifikátor záznamu",
+                            "example": 123456
+                          },
+                          "identifiers": {
+                            "type": "array",
+                            "description": "IČO",
+                            "items": {
+                              "$ref": "#/components/schemas/TimedValue"
+                            }
+                          },
+                          "fullNames": {
+                            "type": "array",
+                            "description": "Plný názov PO",
+                            "items": {
+                              "$ref": "#/components/schemas/TimedValue"
+                            }
+                          },
+                          "addresses": {
+                            "type": "array",
+                            "description": "Adresa sídla PO",
+                            "items": {
+                              "$ref": "#/components/schemas/Address"
+                            }
+                          },
+                          "establishment": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Dátum vzniku",
+                            "example": "2021-01-01"
+                          },
+                          "termination": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Dátum zániku",
+                            "example": "2021-01-01"
+                          },
+                          "sourceRegister": {
+                            "type": "object",
+                            "description": "Zdrojový register",
+                            "properties": {
+                              "value": {
+                                "$ref": "#/components/schemas/CodeValue",
+                                "description": "Názov zdrojového registra (číselník CL010112)"
+                              },
+                              "registrationOffices": {
+                                "type": "array",
+                                "description": "Registrátor / registrový úrad",
+                                "items": {
+                                  "$ref": "#/components/schemas/TimedValue"
+                                }
+                              },
+                              "registrationNumbers": {
+                                "type": "array",
+                                "description": "Registračné číslo",
+                                "items": {
+                                  "$ref": "#/components/schemas/TimedValue"
+                                }
+                              }
+                            }
+                          },
+                          "dbModificationDate": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Dátum poslednej aktualizácie údajov o PO v databáze, t.j. kedy začala byť aktuálna verzia záznamu dostupná cez toto API. *Tento dátum nemusí reflektovať dátum legislatívnej účinnosti zmeny.*",
+                            "example": "2021-01-01"
+                          }
+                        }
+                      }
+                    },
+                    "license": {
+                      "type": "string",
+                      "description": "Licenčné informácie",
+                      "example": "Licencia pre použitie údajov RPO..."
+                    }
+                  }
+                },
+                "examples": {
+                  "example1": {
+                    "value": {
+                      "results": [
+                        {
+                          "id": 123456,
+                          "identifiers": [
+                            {
+                              "value": "hodnota",
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31"
+                            }
+                          ],
+                          "fullNames": [
+                            {
+                              "value": "hodnota",
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31"
+                            }
+                          ],
+                          "addresses": [
+                            {
+                              "formatedAddress": "Komárno, Pohraničná 6/A",
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31",
+                              "street": "Pohraničná",
+                              "regNumber": 0,
+                              "buildingNumber": "6/A",
+                              "postalCodes": [
+                                "94501"
+                              ],
+                              "municipality": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "country": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "district": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "buildingIndex": ""
+                            }
+                          ],
+                          "establishment": "2021-01-01",
+                          "termination": "2021-01-01",
+                          "sourceRegister": {
+                            "value": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "registrationOffices": [
+                              {
+                                "value": "hodnota",
+                                "validFrom": "2021-01-01",
+                                "validTo": "2021-12-31"
+                              }
+                            ],
+                            "registrationNumbers": [
+                              {
+                                "value": "hodnota",
+                                "validFrom": "2021-01-01",
+                                "validTo": "2021-12-31"
+                              }
+                            ]
+                          },
+                          "dbModificationDate": "2021-01-01"
+                        }
+                      ],
+                      "license": "Licencia pre použitie údajov RPO..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/entity/{id}": {
+      "get": {
+        "summary": "Detaily PO",
+        "description": "<p>Volanie, ktoré pre zadaný jedinečný identifikátor záznamu (<code>id</code>) vráti aktuálne resp.\nvšetky dáta PO (v závislosti od zadaných parametrov).</p>\n<p>V prípade, ak záznam so zadaným <code>id</code> neexistuje, volanie vráti odpoveď typu <code>404: Not Found</code>.</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "<p>Jedinedinečný identifikátor záznamu</p>\n",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 123456
+            }
+          },
+          {
+            "name": "showHistoricalData",
+            "in": "query",
+            "description": "<p>Zahrnúť historické údaje</p>\n",
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "example": false
+            }
+          },
+          {
+            "name": "showOrganizationUnits",
+            "in": "query",
+            "description": "<p>Zahrnúť organizačné jednotky</p>\n",
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "example": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "Jedinedinečný identifikátor záznamu",
+                      "example": 123456
+                    },
+                    "dbModificationDate": {
+                      "type": "string",
+                      "format": "date",
+                      "description": "Dátum poslednej aktualizácie údajov o PO v databáze, t.j. kedy začala byť aktuálna verzia záznamu dostupná cez toto API. *Tento dátum nemusí reflektovať dátum legislatívnej účinnosti zmeny.*",
+                      "example": "2021-01-01"
+                    },
+                    "identifiers": {
+                      "type": "array",
+                      "description": "IČO",
+                      "items": {
+                        "$ref": "#/components/schemas/TimedValue"
+                      }
+                    },
+                    "fullNames": {
+                      "type": "array",
+                      "description": "Plný názov PO",
+                      "items": {
+                        "$ref": "#/components/schemas/TimedValue"
+                      }
+                    },
+                    "alternativeNames": {
+                      "type": "array",
+                      "description": "Alternatívny názov PO",
+                      "items": {
+                        "$ref": "#/components/schemas/TimedValue"
+                      }
+                    },
+                    "addresses": {
+                      "type": "array",
+                      "description": "Adresa sídla PO",
+                      "items": {
+                        "$ref": "#/components/schemas/Address"
+                      }
+                    },
+                    "legalForms": {
+                      "type": "array",
+                      "description": "Právna forma (číselník CL000056)",
+                      "items": {
+                        "$ref": "#/components/schemas/TimedCodeValue"
+                      }
+                    },
+                    "establishment": {
+                      "type": "string",
+                      "format": "date",
+                      "description": "Dátum vzniku",
+                      "example": "2021-01-01"
+                    },
+                    "termination": {
+                      "type": "string",
+                      "format": "date",
+                      "description": "Dátum zániku",
+                      "example": "2021-01-01"
+                    },
+                    "activities": {
+                      "type": "array",
+                      "description": "Predmet činnosti",
+                      "items": {
+                        "$ref": "#/components/schemas/Activity"
+                      }
+                    },
+                    "statutoryBodies": {
+                      "type": "array",
+                      "description": "Štatutárny orgán",
+                      "items": {
+                        "$ref": "#/components/schemas/StatutaryBody"
+                      }
+                    },
+                    "stakeholders": {
+                      "type": "array",
+                      "description": "Zainteresovaná osoba",
+                      "items": {
+                        "$ref": "#/components/schemas/Stakeholder"
+                      }
+                    },
+                    "legalStatuses": {
+                      "type": "array",
+                      "description": "Právny stav PO (číselník CL010108)",
+                      "items": {
+                        "$ref": "#/components/schemas/TimedCodeValue"
+                      }
+                    },
+                    "otherLegalFacts": {
+                      "type": "array",
+                      "description": "Iné právne skutočnosti",
+                      "items": {
+                        "$ref": "#/components/schemas/TimedValue"
+                      }
+                    },
+                    "authorizations": {
+                      "type": "array",
+                      "description": "Oprávnenie konať v mene PO",
+                      "items": {
+                        "$ref": "#/components/schemas/TimedValue"
+                      }
+                    },
+                    "equities": {
+                      "type": "array",
+                      "description": "Základé imanie",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "validFrom": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť od",
+                            "example": "2021-01-01"
+                          },
+                          "validTo": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť do",
+                            "example": "2021-12-31"
+                          },
+                          "value": {
+                            "type": "number",
+                            "description": "Výška základného imania",
+                            "example": 10000
+                          },
+                          "valuePaid": {
+                            "type": "number",
+                            "description": "Výška splateného imania",
+                            "example": 10000
+                          },
+                          "valueApproved": {
+                            "type": "number",
+                            "description": "Schválená výška",
+                            "example": 10000
+                          },
+                          "currency": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Mena (číselník CL000083)"
+                          }
+                        }
+                      }
+                    },
+                    "shares": {
+                      "type": "array",
+                      "description": "Akcie",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "validFrom": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť od",
+                            "example": "2021-01-01"
+                          },
+                          "validTo": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť do",
+                            "example": "2021-12-31"
+                          },
+                          "fullName": {
+                            "type": "string",
+                            "description": "Názov zainteresovanej osoby (PO)",
+                            "example": "The Company, s.r.o."
+                          },
+                          "personName": {
+                            "$ref": "#/components/schemas/PersonName",
+                            "description": "Meno zainteresovanej osoby (FO)"
+                          },
+                          "shareType": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Druh akcie (číselník CL010111)"
+                          },
+                          "shareForm": {
+                            "type": "string",
+                            "description": "Podoba akcie",
+                            "example": "Akcia na meno"
+                          },
+                          "shareNominalValue": {
+                            "type": "number",
+                            "description": "Menovitá hodnota akcie",
+                            "example": 10000
+                          },
+                          "shareCurrency": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Mena akcie (číselník CL000083)"
+                          },
+                          "amountOfFunds": {
+                            "type": "number",
+                            "description": "Množstvo akcií",
+                            "example": 10000
+                          },
+                          "transferability": {
+                            "type": "string",
+                            "description": "Prevoditelnosť akcií",
+                            "example": "Obmedzená prevoditeľnosť"
+                          }
+                        }
+                      }
+                    },
+                    "deposits": {
+                      "type": "array",
+                      "description": "Vklady",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "validFrom": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť od",
+                            "example": "2021-01-01"
+                          },
+                          "validTo": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť do",
+                            "example": "2021-12-31"
+                          },
+                          "personName": {
+                            "$ref": "#/components/schemas/PersonName",
+                            "description": "Meno zainteresovanej osoby (FO)"
+                          },
+                          "fullName": {
+                            "type": "string",
+                            "description": "Názov zainteresovanej osoby (PO)",
+                            "example": "The Company, s.r.o."
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Typ vkladu",
+                            "example": "Peňažný vklad"
+                          },
+                          "amount": {
+                            "type": "number",
+                            "description": "Výška vkladu",
+                            "example": 10000
+                          },
+                          "currency": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Mena (číselník CL000083)"
+                          }
+                        }
+                      }
+                    },
+                    "sourceRegister": {
+                      "type": "object",
+                      "description": "Zdrojový register",
+                      "properties": {
+                        "value": {
+                          "$ref": "#/components/schemas/CodeValue",
+                          "description": "Názov zdrojového registra (číselník CL010112)"
+                        },
+                        "registrationOffices": {
+                          "type": "array",
+                          "description": "Registrátor / registrový úrad",
+                          "items": {
+                            "$ref": "#/components/schemas/TimedValue"
+                          }
+                        },
+                        "registrationNumbers": {
+                          "type": "array",
+                          "description": "Registračné číslo",
+                          "items": {
+                            "$ref": "#/components/schemas/TimedValue"
+                          }
+                        }
+                      }
+                    },
+                    "predecessors": {
+                      "type": "array",
+                      "description": "Právny predchodca PO",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "identifier": {
+                            "type": "string",
+                            "description": "IČO",
+                            "example": "38123456"
+                          },
+                          "fullName": {
+                            "type": "string",
+                            "description": "Názov",
+                            "example": "The Company, s.r.o."
+                          },
+                          "address": {
+                            "$ref": "#/components/schemas/Address"
+                          },
+                          "validFrom": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť od",
+                            "example": "2021-01-01"
+                          },
+                          "validTo": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť do",
+                            "example": "2021-01-01"
+                          }
+                        }
+                      }
+                    },
+                    "successors": {
+                      "type": "array",
+                      "description": "Právny nástupca PO",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "identifier": {
+                            "type": "string",
+                            "description": "IČO",
+                            "example": "38123456"
+                          },
+                          "fullName": {
+                            "type": "string",
+                            "description": "Názov",
+                            "example": "The Company, s.r.o."
+                          },
+                          "address": {
+                            "$ref": "#/components/schemas/Address"
+                          },
+                          "validFrom": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť od",
+                            "example": "2021-01-01"
+                          },
+                          "validTo": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Platnosť do",
+                            "example": "2021-01-01"
+                          }
+                        }
+                      }
+                    },
+                    "statisticalCodes": {
+                      "type": "object",
+                      "description": "Štatistické kódy",
+                      "properties": {
+                        "statCodesActualization": {
+                          "type": "string",
+                          "format": "date",
+                          "description": "Dátum aktualizácie štatistických kódov",
+                          "example": "2021-01-01"
+                        },
+                        "mainActivity": {
+                          "$ref": "#/components/schemas/CodeValue",
+                          "description": "Údaje o hlavnej ekonomickej činnosti PO  (číselník CL005205)"
+                        },
+                        "esa2010": {
+                          "$ref": "#/components/schemas/CodeValue",
+                          "description": "Údaj o zaradení PO do európskeho systému účtov (číselník CL010010)"
+                        }
+                      }
+                    },
+                    "kuvPersonsInfo": {
+                      "type": "array",
+                      "description": "Základné údaje o konečnom užívateľovi výhod",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "personName": {
+                            "$ref": "#/components/schemas/PersonName",
+                            "description": "Meno"
+                          },
+                          "birthDate": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Dátum narodenia",
+                            "example": "1990-01-01"
+                          },
+                          "citizenship": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Štátna príslušnosť (číselníky CL000086 / STA)"
+                          },
+                          "country": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Štát pobytu (číselníky CL000086 / STA)"
+                          },
+                          "kuvInfo": {
+                            "type": "array",
+                            "description": "Údaje o postavení konečného užívateľa výhod (číselník CL010430)",
+                            "items": {
+                              "$ref": "#/components/schemas/TimedCodeValue"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "topManagementsInfo": {
+                      "type": "array",
+                      "description": "Základné údaje o vrcholovom manažmente konečného užívateľa výhod",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "personName": {
+                            "$ref": "#/components/schemas/PersonName",
+                            "description": "Meno"
+                          },
+                          "birthDate": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Dátum narodenia",
+                            "example": "1990-01-01"
+                          },
+                          "citizenship": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Štátna príslušnosť (číselníky CL000086 / STA)"
+                          },
+                          "country": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Štát pobytu (číselníky CL000086 / STA)"
+                          },
+                          "kuvInfo": {
+                            "type": "array",
+                            "description": "Údaje o type vrcholového manažmentu (číselník CL010113)",
+                            "items": {
+                              "$ref": "#/components/schemas/TimedCodeValue"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "organizationUnits": {
+                      "type": "array",
+                      "description": "Údaje o organizačných zložkách",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "$ref": "#/components/schemas/CodeValue",
+                            "description": "Typ organizačnej jednotky (číselník CL010110)"
+                          },
+                          "identifier": {
+                            "type": "string",
+                            "description": "IČO",
+                            "example": "38123456"
+                          },
+                          "fullNames": {
+                            "type": "array",
+                            "description": "Plný názov organizačnej zložky",
+                            "items": {
+                              "$ref": "#/components/schemas/TimedValue"
+                            }
+                          },
+                          "addresses": {
+                            "type": "array",
+                            "description": "Adresa",
+                            "items": {
+                              "$ref": "#/components/schemas/Address"
+                            }
+                          },
+                          "establishment": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Dátum vzniku",
+                            "example": "2021-01-01"
+                          },
+                          "termination": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "Dátum zániku",
+                            "example": "2021-01-01"
+                          },
+                          "stakeholders": {
+                            "type": "array",
+                            "description": "Zainteresovaná osoba",
+                            "items": {
+                              "$ref": "#/components/schemas/Stakeholder"
+                            }
+                          },
+                          "activities": {
+                            "type": "array",
+                            "description": "Predmet činnosti",
+                            "items": {
+                              "$ref": "#/components/schemas/Activity"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "license": {
+                      "type": "string",
+                      "description": "Licenčné informácie",
+                      "example": "Licencia pre použitie údajov RPO..."
+                    }
+                  }
+                },
+                "examples": {
+                  "example1": {
+                    "value": {
+                      "id": 123456,
+                      "dbModificationDate": "2021-01-01",
+                      "identifiers": [
+                        {
+                          "value": "hodnota",
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31"
+                        }
+                      ],
+                      "fullNames": [
+                        {
+                          "value": "hodnota",
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31"
+                        }
+                      ],
+                      "alternativeNames": [
+                        {
+                          "value": "hodnota",
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31"
+                        }
+                      ],
+                      "addresses": [
+                        {
+                          "formatedAddress": "Komárno, Pohraničná 6/A",
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31",
+                          "street": "Pohraničná",
+                          "regNumber": 0,
+                          "buildingNumber": "6/A",
+                          "postalCodes": [
+                            "94501"
+                          ],
+                          "municipality": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "country": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "district": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "buildingIndex": ""
+                        }
+                      ],
+                      "legalForms": [
+                        {
+                          "value": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31"
+                        }
+                      ],
+                      "establishment": "2021-01-01",
+                      "termination": "2021-01-01",
+                      "activities": [
+                        {
+                          "economicActivityDescription": "Kúpa tovaru za účelom jeho predaja konečnému spotrebiteľovi",
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31",
+                          "suspendedFrom": "2021-01-01",
+                          "suspendedTo": "2021-12-31"
+                        }
+                      ],
+                      "statutoryBodies": [
+                        {
+                          "stakeholderType": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "statutoryBodyMember": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31",
+                          "address": {
+                            "formatedAddress": "Komárno, Pohraničná 6/A",
+                            "validFrom": "2021-01-01",
+                            "validTo": "2021-12-31",
+                            "street": "Pohraničná",
+                            "regNumber": 0,
+                            "buildingNumber": "6/A",
+                            "postalCodes": [
+                              "94501"
+                            ],
+                            "municipality": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "country": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "district": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "buildingIndex": ""
+                          },
+                          "personName": {
+                            "formatedName": "Mgr. Peter Hruška, PhD.",
+                            "givenNames": [
+                              "Peter"
+                            ],
+                            "familyNames": [
+                              "Hruška"
+                            ],
+                            "givenFamilyNames": [
+                              "Hruška"
+                            ],
+                            "prefixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ],
+                            "postfixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ]
+                          },
+                          "identifier": "12345678",
+                          "fullName": "The Company, s.r.o.",
+                          "establishment": "2021-01-01",
+                          "termination": "2021-12-31"
+                        }
+                      ],
+                      "stakeholders": [
+                        {
+                          "stakeholderType": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31",
+                          "address": {
+                            "formatedAddress": "Komárno, Pohraničná 6/A",
+                            "validFrom": "2021-01-01",
+                            "validTo": "2021-12-31",
+                            "street": "Pohraničná",
+                            "regNumber": 0,
+                            "buildingNumber": "6/A",
+                            "postalCodes": [
+                              "94501"
+                            ],
+                            "municipality": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "country": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "district": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "buildingIndex": ""
+                          },
+                          "personName": {
+                            "formatedName": "Mgr. Peter Hruška, PhD.",
+                            "givenNames": [
+                              "Peter"
+                            ],
+                            "familyNames": [
+                              "Hruška"
+                            ],
+                            "givenFamilyNames": [
+                              "Hruška"
+                            ],
+                            "prefixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ],
+                            "postfixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ]
+                          },
+                          "identifier": "12345678",
+                          "fullName": "The Company, s.r.o.",
+                          "establishment": "2021-01-01",
+                          "termination": "2021-12-31"
+                        }
+                      ],
+                      "legalStatuses": [
+                        {
+                          "value": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31"
+                        }
+                      ],
+                      "otherLegalFacts": [
+                        {
+                          "value": "hodnota",
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31"
+                        }
+                      ],
+                      "authorizations": [
+                        {
+                          "value": "hodnota",
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31"
+                        }
+                      ],
+                      "equities": [
+                        {
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31",
+                          "value": 10000,
+                          "valuePaid": 10000,
+                          "valueApproved": 10000,
+                          "currency": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          }
+                        }
+                      ],
+                      "shares": [
+                        {
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31",
+                          "fullName": "The Company, s.r.o.",
+                          "personName": {
+                            "formatedName": "Mgr. Peter Hruška, PhD.",
+                            "givenNames": [
+                              "Peter"
+                            ],
+                            "familyNames": [
+                              "Hruška"
+                            ],
+                            "givenFamilyNames": [
+                              "Hruška"
+                            ],
+                            "prefixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ],
+                            "postfixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ]
+                          },
+                          "shareType": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "shareForm": "Akcia na meno",
+                          "shareNominalValue": 10000,
+                          "shareCurrency": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "amountOfFunds": 10000,
+                          "transferability": "Obmedzená prevoditeľnosť"
+                        }
+                      ],
+                      "deposits": [
+                        {
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-12-31",
+                          "personName": {
+                            "formatedName": "Mgr. Peter Hruška, PhD.",
+                            "givenNames": [
+                              "Peter"
+                            ],
+                            "familyNames": [
+                              "Hruška"
+                            ],
+                            "givenFamilyNames": [
+                              "Hruška"
+                            ],
+                            "prefixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ],
+                            "postfixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ]
+                          },
+                          "fullName": "The Company, s.r.o.",
+                          "type": "Peňažný vklad",
+                          "amount": 10000,
+                          "currency": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          }
+                        }
+                      ],
+                      "sourceRegister": {
+                        "value": {
+                          "value": "hodnota",
+                          "code": "SK0106504556",
+                          "codelistCode": "CL000025"
+                        },
+                        "registrationOffices": [
+                          {
+                            "value": "hodnota",
+                            "validFrom": "2021-01-01",
+                            "validTo": "2021-12-31"
+                          }
+                        ],
+                        "registrationNumbers": [
+                          {
+                            "value": "hodnota",
+                            "validFrom": "2021-01-01",
+                            "validTo": "2021-12-31"
+                          }
+                        ]
+                      },
+                      "predecessors": [
+                        {
+                          "identifier": "38123456",
+                          "fullName": "The Company, s.r.o.",
+                          "address": {
+                            "formatedAddress": "Komárno, Pohraničná 6/A",
+                            "validFrom": "2021-01-01",
+                            "validTo": "2021-12-31",
+                            "street": "Pohraničná",
+                            "regNumber": 0,
+                            "buildingNumber": "6/A",
+                            "postalCodes": [
+                              "94501"
+                            ],
+                            "municipality": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "country": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "district": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "buildingIndex": ""
+                          },
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-01-01"
+                        }
+                      ],
+                      "successors": [
+                        {
+                          "identifier": "38123456",
+                          "fullName": "The Company, s.r.o.",
+                          "address": {
+                            "formatedAddress": "Komárno, Pohraničná 6/A",
+                            "validFrom": "2021-01-01",
+                            "validTo": "2021-12-31",
+                            "street": "Pohraničná",
+                            "regNumber": 0,
+                            "buildingNumber": "6/A",
+                            "postalCodes": [
+                              "94501"
+                            ],
+                            "municipality": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "country": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "district": {
+                              "value": "hodnota",
+                              "code": "SK0106504556",
+                              "codelistCode": "CL000025"
+                            },
+                            "buildingIndex": ""
+                          },
+                          "validFrom": "2021-01-01",
+                          "validTo": "2021-01-01"
+                        }
+                      ],
+                      "statisticalCodes": {
+                        "statCodesActualization": "2021-01-01",
+                        "mainActivity": {
+                          "value": "hodnota",
+                          "code": "SK0106504556",
+                          "codelistCode": "CL000025"
+                        },
+                        "esa2010": {
+                          "value": "hodnota",
+                          "code": "SK0106504556",
+                          "codelistCode": "CL000025"
+                        }
+                      },
+                      "kuvPersonsInfo": [
+                        {
+                          "personName": {
+                            "formatedName": "Mgr. Peter Hruška, PhD.",
+                            "givenNames": [
+                              "Peter"
+                            ],
+                            "familyNames": [
+                              "Hruška"
+                            ],
+                            "givenFamilyNames": [
+                              "Hruška"
+                            ],
+                            "prefixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ],
+                            "postfixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ]
+                          },
+                          "birthDate": "1990-01-01",
+                          "citizenship": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "country": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "kuvInfo": [
+                            {
+                              "value": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31"
+                            }
+                          ]
+                        }
+                      ],
+                      "topManagementsInfo": [
+                        {
+                          "personName": {
+                            "formatedName": "Mgr. Peter Hruška, PhD.",
+                            "givenNames": [
+                              "Peter"
+                            ],
+                            "familyNames": [
+                              "Hruška"
+                            ],
+                            "givenFamilyNames": [
+                              "Hruška"
+                            ],
+                            "prefixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ],
+                            "postfixes": [
+                              {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              }
+                            ]
+                          },
+                          "birthDate": "1990-01-01",
+                          "citizenship": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "country": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "kuvInfo": [
+                            {
+                              "value": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31"
+                            }
+                          ]
+                        }
+                      ],
+                      "organizationUnits": [
+                        {
+                          "type": {
+                            "value": "hodnota",
+                            "code": "SK0106504556",
+                            "codelistCode": "CL000025"
+                          },
+                          "identifier": "38123456",
+                          "fullNames": [
+                            {
+                              "value": "hodnota",
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31"
+                            }
+                          ],
+                          "addresses": [
+                            {
+                              "formatedAddress": "Komárno, Pohraničná 6/A",
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31",
+                              "street": "Pohraničná",
+                              "regNumber": 0,
+                              "buildingNumber": "6/A",
+                              "postalCodes": [
+                                "94501"
+                              ],
+                              "municipality": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "country": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "district": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "buildingIndex": ""
+                            }
+                          ],
+                          "establishment": "2021-01-01",
+                          "termination": "2021-01-01",
+                          "stakeholders": [
+                            {
+                              "stakeholderType": {
+                                "value": "hodnota",
+                                "code": "SK0106504556",
+                                "codelistCode": "CL000025"
+                              },
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31",
+                              "address": {
+                                "formatedAddress": "Komárno, Pohraničná 6/A",
+                                "validFrom": "2021-01-01",
+                                "validTo": "2021-12-31",
+                                "street": "Pohraničná",
+                                "regNumber": 0,
+                                "buildingNumber": "6/A",
+                                "postalCodes": [
+                                  "94501"
+                                ],
+                                "municipality": {
+                                  "value": "hodnota",
+                                  "code": "SK0106504556",
+                                  "codelistCode": "CL000025"
+                                },
+                                "country": {
+                                  "value": "hodnota",
+                                  "code": "SK0106504556",
+                                  "codelistCode": "CL000025"
+                                },
+                                "district": {
+                                  "value": "hodnota",
+                                  "code": "SK0106504556",
+                                  "codelistCode": "CL000025"
+                                },
+                                "buildingIndex": ""
+                              },
+                              "personName": {
+                                "formatedName": "Mgr. Peter Hruška, PhD.",
+                                "givenNames": [
+                                  "Peter"
+                                ],
+                                "familyNames": [
+                                  "Hruška"
+                                ],
+                                "givenFamilyNames": [
+                                  "Hruška"
+                                ],
+                                "prefixes": [
+                                  {
+                                    "value": "hodnota",
+                                    "code": "SK0106504556",
+                                    "codelistCode": "CL000025"
+                                  }
+                                ],
+                                "postfixes": [
+                                  {
+                                    "value": "hodnota",
+                                    "code": "SK0106504556",
+                                    "codelistCode": "CL000025"
+                                  }
+                                ]
+                              },
+                              "identifier": "12345678",
+                              "fullName": "The Company, s.r.o.",
+                              "establishment": "2021-01-01",
+                              "termination": "2021-12-31"
+                            }
+                          ],
+                          "activities": [
+                            {
+                              "economicActivityDescription": "Kúpa tovaru za účelom jeho predaja konečnému spotrebiteľovi",
+                              "validFrom": "2021-01-01",
+                              "validTo": "2021-12-31",
+                              "suspendedFrom": "2021-01-01",
+                              "suspendedTo": "2021-12-31"
+                            }
+                          ]
+                        }
+                      ],
+                      "license": "Licencia pre použitie údajov RPO..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CodeValue": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Hodnota atribútu",
+            "example": "hodnota"
+          },
+          "code": {
+            "type": "string",
+            "description": "Kód hodnoty atribútu",
+            "example": "SK0106504556"
+          },
+          "codelistCode": {
+            "type": "string",
+            "description": "Kód číselníka",
+            "example": "CL000025"
+          }
+        }
+      },
+      "TimedValue": {
+        "type": "array",
+        "description": "Hodnota mnohých atribútov sa môže časom meniť. Tento dátový typ uchováva všetky historické\nhodnoty atribútu, spoločne s informáciou od kedy a do kedy boli platné.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string",
+              "description": "Hodnota",
+              "example": "hodnota"
+            },
+            "validFrom": {
+              "type": "string",
+              "format": "date",
+              "description": "Platnosť hodnoty od",
+              "example": "2021-01-01"
+            },
+            "validTo": {
+              "type": "string",
+              "format": "date",
+              "description": "Platnosť hodnoty do",
+              "example": "2021-12-31"
+            }
+          }
+        }
+      },
+      "TimedCodeValue": {
+        "type": "array",
+        "description": "Tento dátový typ je kombináciou `CodeValue` a `TimedValue`. Uchovávajú sa tu všetky historické\nhodnoty atribútu a ku každej aj jej číselníkový kód, označenie zdrojového číselníka, ako aj\ninformácia od kedy a do kedy bola hodnota platná.",
+        "items": {
+          "$ref": "#/components/schemas/TimedCodeValueEntry"
+        }
+      },
+      "TimedCodeValueEntry": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/CodeValue",
+            "description": "Hodnota atribútu"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť hodnoty od",
+            "example": "2021-01-01"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť hodnoty do",
+            "example": "2021-12-31"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "formatedAddress": {
+            "type": "string",
+            "description": "Formátovaná adresa",
+            "example": "Komárno, Pohraničná 6/A"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť od",
+            "example": "2021-01-01"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť do",
+            "example": "2021-12-31"
+          },
+          "street": {
+            "type": "string",
+            "description": "Ulica",
+            "example": "Pohraničná"
+          },
+          "regNumber": {
+            "type": "integer",
+            "description": "Súpisné číslo",
+            "example": 0
+          },
+          "buildingNumber": {
+            "type": "string",
+            "description": "Orientačné číslo",
+            "example": "6/A"
+          },
+          "postalCodes": {
+            "type": "array",
+            "description": "PSČ",
+            "items": {
+              "type": "string",
+              "example": "94501"
+            }
+          },
+          "municipality": {
+            "$ref": "#/components/schemas/CodeValue",
+            "description": "Obec (číselníky CL000025 / UCE)"
+          },
+          "country": {
+            "$ref": "#/components/schemas/CodeValue",
+            "description": "Štát (číselníky CL000086 / STA)"
+          },
+          "district": {
+            "$ref": "#/components/schemas/CodeValue",
+            "description": "Časť obce (číselníky CL010141 / UCE)"
+          },
+          "buildingIndex": {
+            "type": "string",
+            "description": "Index domu resp. identifikátor adresy z Registra adries"
+          }
+        }
+      },
+      "Activity": {
+        "type": "object",
+        "properties": {
+          "economicActivityDescription": {
+            "type": "string",
+            "description": "Predmet činnosti",
+            "example": "Kúpa tovaru za účelom jeho predaja konečnému spotrebiteľovi"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť od",
+            "example": "2021-01-01"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť do",
+            "example": "2021-12-31"
+          },
+          "suspendedFrom": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť pozastavená od",
+            "example": "2021-01-01"
+          },
+          "suspendedTo": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť pozastavená do",
+            "example": "2021-12-31"
+          }
+        }
+      },
+      "PersonName": {
+        "type": "object",
+        "properties": {
+          "formatedName": {
+            "type": "string",
+            "description": "Formatované meno",
+            "example": "Mgr. Peter Hruška, PhD."
+          },
+          "givenNames": {
+            "type": "array",
+            "description": "Meno",
+            "items": {
+              "type": "string",
+              "example": "Peter"
+            }
+          },
+          "familyNames": {
+            "type": "array",
+            "description": "Priezvisko",
+            "items": {
+              "type": "string",
+              "example": "Hruška"
+            }
+          },
+          "givenFamilyNames": {
+            "type": "array",
+            "description": "Rodné priezvisko",
+            "items": {
+              "type": "string",
+              "example": "Hruška"
+            }
+          },
+          "prefixes": {
+            "type": "array",
+            "description": "Titul pred menom (číselníky CL000062 / TIT)",
+            "items": {
+              "$ref": "#/components/schemas/CodeValue"
+            }
+          },
+          "postfixes": {
+            "type": "array",
+            "description": "Titul za menom (číselníky CL000063 / TIT)",
+            "items": {
+              "$ref": "#/components/schemas/CodeValue"
+            }
+          }
+        }
+      },
+      "Stakeholder": {
+        "type": "object",
+        "properties": {
+          "stakeholderType": {
+            "$ref": "#/components/schemas/CodeValue",
+            "description": "Typ zainteresovanej osoby (číselník CL010109)"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť od",
+            "example": "2021-01-01"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť do",
+            "example": "2021-12-31"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "personName": {
+            "$ref": "#/components/schemas/PersonName",
+            "description": "Meno zainteresovanej osoby (vypĺňa sa v prípade, ak je zainteresovaná osoba FO)"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "IČO (vypĺňa sa v prípade, ak je zainteresovaná osoba PO alebo organizačná zložka)",
+            "example": "12345678"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Plný názov PO (vypĺňa sa v prípade, ak je zainteresovaná osoba PO alebo organizačná zložka)",
+            "example": "The Company, s.r.o."
+          },
+          "establishment": {
+            "type": "string",
+            "format": "date",
+            "description": "Dátum vzniku (vypĺňa sa v prípade, ak je zainteresovaná osoba PO alebo organizačná zložka)",
+            "example": "2021-01-01"
+          },
+          "termination": {
+            "type": "string",
+            "format": "date",
+            "description": "Dátum zániku (vypĺňa sa v prípade, ak je zainteresovaná osoba PO alebo organizačná zložka)",
+            "example": "2021-12-31"
+          }
+        }
+      },
+      "StatutaryBody": {
+        "type": "object",
+        "properties": {
+          "stakeholderType": {
+            "$ref": "#/components/schemas/CodeValue",
+            "description": "Typ štatutárneho orgánu  (číselník CL010113)"
+          },
+          "statutoryBodyMember": {
+            "$ref": "#/components/schemas/CodeValue",
+            "description": "Funkcia člena kolektívneho štatutárneho orgánu (číselník CL010470)"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť od",
+            "example": "2021-01-01"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť do",
+            "example": "2021-12-31"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "personName": {
+            "$ref": "#/components/schemas/PersonName",
+            "description": "Meno štatutára (vypĺňa sa v prípade, ak je štatutár FO)"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "IČO (vypĺňa sa v prípade, ak je štatutár PO alebo organizačná zložka)",
+            "example": "12345678"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Plný názov PO (vypĺňa sa v prípade, ak je štatutár PO alebo organizačná zložka)",
+            "example": "The Company, s.r.o."
+          },
+          "establishment": {
+            "type": "string",
+            "format": "date",
+            "description": "Dátum vzniku (vypĺňa sa v prípade, ak je štatutár PO alebo organizačná zložka)",
+            "example": "2021-01-01"
+          },
+          "termination": {
+            "type": "string",
+            "format": "date",
+            "description": "Dátum zániku (vypĺňa sa v prípade, ak je štatutár PO alebo organizačná zložka)",
+            "example": "2021-12-31"
+          }
+        }
+      }
+    }
+  }
+}
