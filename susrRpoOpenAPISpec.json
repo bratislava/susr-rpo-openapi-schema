@@ -1714,25 +1714,28 @@
         "type": "array",
         "description": "Hodnota mnohých atribútov sa môže časom meniť. Tento dátový typ uchováva všetky historické\nhodnoty atribútu, spoločne s informáciou od kedy a do kedy boli platné.",
         "items": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "string",
-              "description": "Hodnota",
-              "example": "hodnota"
-            },
-            "validFrom": {
-              "type": "string",
-              "format": "date",
-              "description": "Platnosť hodnoty od",
-              "example": "2021-01-01"
-            },
-            "validTo": {
-              "type": "string",
-              "format": "date",
-              "description": "Platnosť hodnoty do",
-              "example": "2021-12-31"
-            }
+          "$ref": "#/components/schemas/TimedValueEntry"
+        }
+      },
+      "TimedValueEntry": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Hodnota",
+            "example": "hodnota"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť hodnoty od",
+            "example": "2021-01-01"
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date",
+            "description": "Platnosť hodnoty do",
+            "example": "2021-12-31"
           }
         }
       },
@@ -1766,6 +1769,7 @@
       },
       "Address": {
         "type": "object",
+        "required":["formatedAddress", "street", "regNumber", "buildingNumber", "postalCodes", "buildingIndex"],
         "properties": {
           "formatedAddress": {
             "type": "string",
@@ -1861,6 +1865,7 @@
       },
       "PersonName": {
         "type": "object",
+        "required": ["formatedName", "givenNames", "familyNames"],
         "properties": {
           "formatedName": {
             "type": "string",
