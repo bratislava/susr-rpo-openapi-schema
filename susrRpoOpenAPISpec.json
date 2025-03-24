@@ -475,7 +475,6 @@
             "name": "id",
             "in": "path",
             "description": "<p>Jedinedinečný identifikátor záznamu</p>\n",
-            "required": true,
             "schema": {
               "type": "number",
               "example": 123456
@@ -1769,7 +1768,6 @@
       },
       "Address": {
         "type": "object",
-        "required":["formatedAddress", "street", "regNumber", "buildingNumber", "postalCodes", "buildingIndex"],
         "properties": {
           "formatedAddress": {
             "type": "string",
@@ -1865,7 +1863,6 @@
       },
       "PersonName": {
         "type": "object",
-        "required": ["formatedName", "givenNames", "familyNames"],
         "properties": {
           "formatedName": {
             "type": "string",
