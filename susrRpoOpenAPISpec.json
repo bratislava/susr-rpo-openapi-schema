@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Register právnických osôb, podnikateľov a orgánov verejnej moci",
-    "description": "<img alt=\"Logo ŠÚSR\" src=\"https://slovak.statistics.sk/wps/portal/ext/home/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NLPyCXA08QxwD3IO8TAwNTEz1wwkpiAJKG-AAjgZA_VFgJc7ujh4m5j4GBhY-7qYGno4eoUGWgcbGBo7GUAV4zCjIjTDIdFRUBADse0bP/dz/d5/L2dBISEvZ0FBIS9nQSEh/images/logo.png\">\n<p>Verejné REST API rozhranie pre poskytovanie dát z Registra<br>\nprávnických osôb, podnikateľov a orgánov verejnej moci<br>\n(ďalej ako „RPO“). Správcom informačného systému RPO<br>\nje Štatistický úrad Slovenskej republiky (ŠÚ SR).</p>\n<p>Aktualizácia údajov REST API prebieha denne v nočných hodinách.</p>\n<p>Technické detaily k jednotlivým volaniam nájdete po kliknutí na jednotlivé <em>Response</em> kódy, napr. <em>200 OK</em>. V odpovedi sú zasielané len tie atribúty, ktoré majú hodnotu rozdielnu od <em>null</em>.</p>\n<p>Pravdivostné parametre (typu <em>boolean</em>) jednotlivých volaní sú vyhodnocované tak, že iba hodnota <code>true</code> (bez ohľadu na veľkosť písmen) je akceptovaná ako pravda (<em>true</em>) a akákoľvek iná hodnota je vyhodnotená ako nepravda (<em>false</em>). Tzn. ak je, napríklad, pri volaní <em>Detail PO</em> potrebné zaradiť do výsledku aj historické záznamy, zadanie parametra musí byť <code>showHistoricalData=true</code>. Prípadné zadanie <code>showHistoricalData=ano</code> bude vyhodnotené ako <code>false</code>, t.j. historické dáta nebudú zahrnuté vo výsledku.</p>\n<h5>Zoznam číselníkov</h5>\n<p>Vybrané atribúty, ktoré sú typu <a href=\"#/data-structures/0/code-value\"><code>CodeValue</code></a> alebo\n<a href=\"#/data-structures/0/timed-code-value\"><code>TimedCodeValue</code></a>, obsahujú okrem svojej hodnoty (<code>.value</code>) aj číselníkový\nkód (<code>.code</code>) a označenie číselníka, z ktorého hodnota pochádza (<code>.codelistCode</code>). Jednotlivé číelníky, okrem\nčíselníkov UCE a STA, ktoré sú v gescii Ministerstva vnútra SR ako správcu RFO, sú pre referenciu dostupné na\nnasledujúcich adresách:</p>\n<ul>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2936\">CL000025: Lokálna štatistická územná jednotka 2 – obec</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2941\">CL000056: Právna forma organizácie</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2955\">CL000062: Titul pred menom</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2938\">CL000063: Titul za menom</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2960\">CL000086: Krajina OSN</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2948\">CL005205: Ekonomická činnosť</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010010=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010010: Inštitucionálne subsektory ESÚ 2010</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2949\">CL010108: Právny stav organizácie</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2950\">CL010109: Typ zainteresovanej osoby</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2951\">CL010110: Typ organizačnej jednotky</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2952\">CL010111: Druh akcie</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010112=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010112: Zdrojový register</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2953\">CL010113: Typ štatutárneho orgánu</a></p>\n</li>\n<li>\n<p>CL000083: Jednotka meny</p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2990\">CL010141: Časť obce</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010430=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010430: Konečný užívateľ výhod v zmysle AML zákona</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010470=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010470: Funkcia člena kolektívneho štatutárneho orgánu</a></p>\n</li>\n<li>\n<p>príp. plný zoznam číselníkov na <a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/\">stránke ŠÚ SR</a> alebo na <a href=\"https://metais.vicepremier.gov.sk/codelists/publiclist\">stránke MetaIS</a></p>\n</li>\n</ul>\n<h5>Kompletný export registra právnických osôb</h5>\n<p>V príade záujmu je možné stiahnuť si kompletný export údajov z registra právnických osôb. Exportované súbory\nsú verejne prístupné na objektovom úložisku, ktoré je sprístupnené cez Amazon S3 kompatibilné API na\nendpointe: <br> <a href=\"https://frkqbrydxwdp.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/susr-rpo/\">https://frkqbrydxwdp.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/susr-rpo/</a></p>\n<p>Export pozostáva z dvoch typov súborov:</p>\n<ul>\n<li>\n<p>Súbory inicializačnej dávky majú prefix &quot;<code>batch-init/</code>&quot; a mennú konvenciu <code>init_yyyy-mm-dd_nnn.json.gz</code>, kde\n<code>yyyy-mm-dd</code> je dátum exportovania dávky a <code>nnn</code> je poradové číslo súboru v dávke. Tieto súbory obsahujú kompletný\nexport všetkých údajov RPO ku danému dňu, a sú generované raz mesačne (prvá sobota v mesiaci).</p>\n</li>\n<li>\n<p>Súbory dennej dávky majú prefix &quot;<code>batch-daily/</code>&quot; a mennú konvenciu <code>actual_yyyy-mm-dd.json.gz</code>, kde <code>yyyy-mm-dd</code>\nje dátum exportovania dávky. Tieto súbory obsahujú iba záznamy, ktoré boli do RPO pridané alebo zmenené od poslednej\ndennej dávky.</p>\n</li>\n</ul>\n<p>Súbory obsahujú kompletné aktuálne záznamy subjektov v systéme RPO v JSON štruktúre, ktorá je popísaná v časti\n<a href=\"#/reference/0/detaily-po\">Detaily PO -&gt; Response (Object)</a>. Rozdiel v štruktúre je iba v atribútoch <code>dbModificationDate</code> a\n<code>license</code>, ktoré v exportovaných súboroch nie sú prítomné. Na objektovom úložisku sú k dispozícii inicializačné a denné\ndávky za posledných 45 dní.</p>\n<h6>Vytvorenie vlastnej kópie registra</h6>\n<p>Pre vytvorenie vlastnej kópie registra právnických osôb je potrebné:</p>\n<ol>\n<li>Importovať všetky súbory z najnovšej inicializačnej dávky. Napr. pre dávku z 3.7.2021, ktorá pozostáva z 20 súborov, to\nbude:<br>\n<code>batch-init/init_2021-07-03_001.json.gz</code><br>\n<code>batch-init/init_2021-07-03_002.json.gz</code><br>\n...<br>\n<code>batch-init/init_2021-07-03_020.json.gz</code><br></li>\n<li>Po jednom importovať všetky aktualizačné dávky, ktoré majú dátum <em>neskorší</em> (nie rovnaký) ako iniciálna dávka. Napr.:<br>\n<code>batch-daily/actual_2021-07-04.json.gz</code><br>\n<code>batch-daily/actual_2021-07-05.json.gz</code><br>\n... atď., až po najnovší súbor<br></li>\n</ol>\n<h5>Licencia pre použitie údajov RPO:</h5>\n<ol>\n<li>\n<p>ŠÚ SR ako správca informačného systému RPO uplatňuje na použitie sprístupnených údajov z RPO uvedených v\n§ 7 ods. 2 a § 7a ods. 4 zákona č. 272/2015 Z. z. o registri právnických osôb, podnikateľov a orgánov\nverejnej moci a o zmene a doplnení niektorých zákonov (ďalej len „zákon o registri právnických osôb&quot;)\nmedzinárodnú verejnú licenciu Creative Commons Attribution License (cc-by) 4.0 (ďalej len „verejná licencia&quot;).</p>\n</li>\n<li>\n<p>Predmetom verejnej licencie sú sprístupnené údaje z RPO prostredníctvom webového sídla ŠÚ SR v zmysle § 7 ods. 2\na § 7a ods. 4 zákona o registri právnických osôb.</p>\n</li>\n<li>\n<p>ŠÚ SR udeľuje súhlas na použitie predmetu verejnej licencie a výkon licencovaných práv („licencia&quot;)\npodľa vyššie citovanej verejnej licencie.</p>\n</li>\n</ol>",
+    "description": "<img alt=\"Logo ŠÚSR\" src=\"https://slovak.statistics.sk/wps/portal/ext/home/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NLPyCXA08QxwD3IO8TAwNTEz1wwkpiAJKG-AAjgZA_VFgJc7ujh4m5j4GBhY-7qYGno4eoUGWgcbGBo7GUAV4zCjIjTDIdFRUBADse0bP/dz/d5/L2dBISEvZ0FBIS9nQSEh/images/logo.png\">\n<p>Verejné REST API rozhranie pre poskytovanie dát z Registra<br>\nprávnických osôb, podnikateľov a orgánov verejnej moci<br>\n(ďalej ako „RPO“). Správcom informačného systému RPO<br>\nje Štatistický úrad Slovenskej republiky (ŠÚ SR).</p>\n<p>Aktualizácia údajov REST API prebieha denne v nočných hodinách.</p>\n<p>Technické detaily k jednotlivým volaniam nájdete po kliknutí na jednotlivé <em>Response</em> kódy, napr. <em>200 OK</em>. V odpovedi sú zasielané len tie atribúty, ktoré majú hodnotu rozdielnu od <em>null</em>.</p>\n<p>Pravdivostné parametre (typu <em>boolean</em>) jednotlivých volaní sú vyhodnocované tak, že iba hodnota <code>true</code> (bez ohľadu na veľkosť písmen) je akceptovaná ako pravda (<em>true</em>) a akákoľvek iná hodnota je vyhodnotená ako nepravda (<em>false</em>). Tzn. ak je, napríklad, pri volaní <em>Detail PO</em> potrebné zaradiť do výsledku aj historické záznamy, zadanie parametra musí byť <code>showHistoricalData=true</code>. Prípadné zadanie <code>showHistoricalData=ano</code> bude vyhodnotené ako <code>false</code>, t.j. historické dáta nebudú zahrnuté vo výsledku.</p>\n<h5>Zoznam číselníkov</h5>\n<p>Vybrané atribúty, ktoré sú typu <a href=\"#/data-structures/0/code-value\"><code>CodeValue</code></a> alebo\n<a href=\"#/data-structures/0/timed-code-value\"><code>TimedCodeValueEntry</code></a>, obsahujú okrem svojej hodnoty (<code>.value</code>) aj číselníkový\nkód (<code>.code</code>) a označenie číselníka, z ktorého hodnota pochádza (<code>.codelistCode</code>). Jednotlivé číelníky, okrem\nčíselníkov UCE a STA, ktoré sú v gescii Ministerstva vnútra SR ako správcu RFO, sú pre referenciu dostupné na\nnasledujúcich adresách:</p>\n<ul>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2936\">CL000025: Lokálna štatistická územná jednotka 2 – obec</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2941\">CL000056: Právna forma organizácie</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2955\">CL000062: Titul pred menom</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2938\">CL000063: Titul za menom</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2960\">CL000086: Krajina OSN</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2948\">CL005205: Ekonomická činnosť</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010010=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010010: Inštitucionálne subsektory ESÚ 2010</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2949\">CL010108: Právny stav organizácie</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2950\">CL010109: Typ zainteresovanej osoby</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2951\">CL010110: Typ organizačnej jednotky</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2952\">CL010111: Druh akcie</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010112=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010112: Zdrojový register</a></p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2953\">CL010113: Typ štatutárneho orgánu</a></p>\n</li>\n<li>\n<p>CL000083: Jednotka meny</p>\n</li>\n<li>\n<p><a href=\"https://metais.vicepremier.gov.sk/codelists/detail/2990\">CL010141: Časť obce</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010430=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010430: Konečný užívateľ výhod v zmysle AML zákona</a></p>\n</li>\n<li>\n<p><a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8ziA809LZycDB0NDHy9nQ08jT09Ap0cgwwNzEz0w8EKnN0dPUzMfQwMLHzcTQ08HT1CgywDjY0NHI31o4jRb4ADOBoQpx-Pgij8xofrR-G1wtMEqgCfFwlZUpAbGhphkOkJAIQHM2Q!/dz/d5/L2dBISEvZ0FBIS9nQSEh/p0/IZ7_Q7I8BB1A00HCB0IR6PUKPT3031=CZ6_Q7I8BB1A00MKC0I3IHQBAR1064=LA0=EcodeListVersion!1=codeListCode!CL010470=actionCommand!getCodeListData==/#Z7_Q7I8BB1A00HCB0IR6PUKPT3031\">CL010470: Funkcia člena kolektívneho štatutárneho orgánu</a></p>\n</li>\n<li>\n<p>príp. plný zoznam číselníkov na <a href=\"https://slovak.statistics.sk/wps/portal/ext/metadata/dials/\">stránke ŠÚ SR</a> alebo na <a href=\"https://metais.vicepremier.gov.sk/codelists/publiclist\">stránke MetaIS</a></p>\n</li>\n</ul>\n<h5>Kompletný export registra právnických osôb</h5>\n<p>V príade záujmu je možné stiahnuť si kompletný export údajov z registra právnických osôb. Exportované súbory\nsú verejne prístupné na objektovom úložisku, ktoré je sprístupnené cez Amazon S3 kompatibilné API na\nendpointe: <br> <a href=\"https://frkqbrydxwdp.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/susr-rpo/\">https://frkqbrydxwdp.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/susr-rpo/</a></p>\n<p>Export pozostáva z dvoch typov súborov:</p>\n<ul>\n<li>\n<p>Súbory inicializačnej dávky majú prefix &quot;<code>batch-init/</code>&quot; a mennú konvenciu <code>init_yyyy-mm-dd_nnn.json.gz</code>, kde\n<code>yyyy-mm-dd</code> je dátum exportovania dávky a <code>nnn</code> je poradové číslo súboru v dávke. Tieto súbory obsahujú kompletný\nexport všetkých údajov RPO ku danému dňu, a sú generované raz mesačne (prvá sobota v mesiaci).</p>\n</li>\n<li>\n<p>Súbory dennej dávky majú prefix &quot;<code>batch-daily/</code>&quot; a mennú konvenciu <code>actual_yyyy-mm-dd.json.gz</code>, kde <code>yyyy-mm-dd</code>\nje dátum exportovania dávky. Tieto súbory obsahujú iba záznamy, ktoré boli do RPO pridané alebo zmenené od poslednej\ndennej dávky.</p>\n</li>\n</ul>\n<p>Súbory obsahujú kompletné aktuálne záznamy subjektov v systéme RPO v JSON štruktúre, ktorá je popísaná v časti\n<a href=\"#/reference/0/detaily-po\">Detaily PO -&gt; Response (Object)</a>. Rozdiel v štruktúre je iba v atribútoch <code>dbModificationDate</code> a\n<code>license</code>, ktoré v exportovaných súboroch nie sú prítomné. Na objektovom úložisku sú k dispozícii inicializačné a denné\ndávky za posledných 45 dní.</p>\n<h6>Vytvorenie vlastnej kópie registra</h6>\n<p>Pre vytvorenie vlastnej kópie registra právnických osôb je potrebné:</p>\n<ol>\n<li>Importovať všetky súbory z najnovšej inicializačnej dávky. Napr. pre dávku z 3.7.2021, ktorá pozostáva z 20 súborov, to\nbude:<br>\n<code>batch-init/init_2021-07-03_001.json.gz</code><br>\n<code>batch-init/init_2021-07-03_002.json.gz</code><br>\n...<br>\n<code>batch-init/init_2021-07-03_020.json.gz</code><br></li>\n<li>Po jednom importovať všetky aktualizačné dávky, ktoré majú dátum <em>neskorší</em> (nie rovnaký) ako iniciálna dávka. Napr.:<br>\n<code>batch-daily/actual_2021-07-04.json.gz</code><br>\n<code>batch-daily/actual_2021-07-05.json.gz</code><br>\n... atď., až po najnovší súbor<br></li>\n</ol>\n<h5>Licencia pre použitie údajov RPO:</h5>\n<ol>\n<li>\n<p>ŠÚ SR ako správca informačného systému RPO uplatňuje na použitie sprístupnených údajov z RPO uvedených v\n§ 7 ods. 2 a § 7a ods. 4 zákona č. 272/2015 Z. z. o registri právnických osôb, podnikateľov a orgánov\nverejnej moci a o zmene a doplnení niektorých zákonov (ďalej len „zákon o registri právnických osôb&quot;)\nmedzinárodnú verejnú licenciu Creative Commons Attribution License (cc-by) 4.0 (ďalej len „verejná licencia&quot;).</p>\n</li>\n<li>\n<p>Predmetom verejnej licencie sú sprístupnené údaje z RPO prostredníctvom webového sídla ŠÚ SR v zmysle § 7 ods. 2\na § 7a ods. 4 zákona o registri právnických osôb.</p>\n</li>\n<li>\n<p>ŠÚ SR udeľuje súhlas na použitie predmetu verejnej licencie a výkon licencovaných práv („licencia&quot;)\npodľa vyššie citovanej verejnej licencie.</p>\n</li>\n</ol>",
     "version": "v1"
   },
   "servers": [
@@ -309,14 +309,14 @@
                             "type": "array",
                             "description": "IČO",
                             "items": {
-                              "$ref": "#/components/schemas/TimedValue"
+                              "$ref": "#/components/schemas/TimedValueEntry"
                             }
                           },
                           "fullNames": {
                             "type": "array",
                             "description": "Plný názov PO",
                             "items": {
-                              "$ref": "#/components/schemas/TimedValue"
+                              "$ref": "#/components/schemas/TimedValueEntry"
                             }
                           },
                           "addresses": {
@@ -350,14 +350,14 @@
                                 "type": "array",
                                 "description": "Registrátor / registrový úrad",
                                 "items": {
-                                  "$ref": "#/components/schemas/TimedValue"
+                                  "$ref": "#/components/schemas/TimedValueEntry"
                                 }
                               },
                               "registrationNumbers": {
                                 "type": "array",
                                 "description": "Registračné číslo",
                                 "items": {
-                                  "$ref": "#/components/schemas/TimedValue"
+                                  "$ref": "#/components/schemas/TimedValueEntry"
                                 }
                               }
                             }
@@ -524,21 +524,21 @@
                       "type": "array",
                       "description": "IČO",
                       "items": {
-                        "$ref": "#/components/schemas/TimedValue"
+                        "$ref": "#/components/schemas/TimedValueEntry"
                       }
                     },
                     "fullNames": {
                       "type": "array",
                       "description": "Plný názov PO",
                       "items": {
-                        "$ref": "#/components/schemas/TimedValue"
+                        "$ref": "#/components/schemas/TimedValueEntry"
                       }
                     },
                     "alternativeNames": {
                       "type": "array",
                       "description": "Alternatívny názov PO",
                       "items": {
-                        "$ref": "#/components/schemas/TimedValue"
+                        "$ref": "#/components/schemas/TimedValueEntry"
                       }
                     },
                     "addresses": {
@@ -552,7 +552,7 @@
                       "type": "array",
                       "description": "Právna forma (číselník CL000056)",
                       "items": {
-                        "$ref": "#/components/schemas/TimedCodeValue"
+                        "$ref": "#/components/schemas/TimedCodeValueEntry"
                       }
                     },
                     "establishment": {
@@ -592,21 +592,21 @@
                       "type": "array",
                       "description": "Právny stav PO (číselník CL010108)",
                       "items": {
-                        "$ref": "#/components/schemas/TimedCodeValue"
+                        "$ref": "#/components/schemas/TimedCodeValueEntry"
                       }
                     },
                     "otherLegalFacts": {
                       "type": "array",
                       "description": "Iné právne skutočnosti",
                       "items": {
-                        "$ref": "#/components/schemas/TimedValue"
+                        "$ref": "#/components/schemas/TimedValueEntry"
                       }
                     },
                     "authorizations": {
                       "type": "array",
                       "description": "Oprávnenie konať v mene PO",
                       "items": {
-                        "$ref": "#/components/schemas/TimedValue"
+                        "$ref": "#/components/schemas/TimedValueEntry"
                       }
                     },
                     "equities": {
@@ -763,14 +763,14 @@
                           "type": "array",
                           "description": "Registrátor / registrový úrad",
                           "items": {
-                            "$ref": "#/components/schemas/TimedValue"
+                            "$ref": "#/components/schemas/TimedValueEntry"
                           }
                         },
                         "registrationNumbers": {
                           "type": "array",
                           "description": "Registračné číslo",
                           "items": {
-                            "$ref": "#/components/schemas/TimedValue"
+                            "$ref": "#/components/schemas/TimedValueEntry"
                           }
                         }
                       }
@@ -891,7 +891,7 @@
                             "type": "array",
                             "description": "Údaje o postavení konečného užívateľa výhod (číselník CL010430)",
                             "items": {
-                              "$ref": "#/components/schemas/TimedCodeValue"
+                              "$ref": "#/components/schemas/TimedCodeValueEntry"
                             }
                           }
                         }
@@ -925,7 +925,7 @@
                             "type": "array",
                             "description": "Údaje o type vrcholového manažmentu (číselník CL010113)",
                             "items": {
-                              "$ref": "#/components/schemas/TimedCodeValue"
+                              "$ref": "#/components/schemas/TimedCodeValueEntry"
                             }
                           }
                         }
@@ -950,7 +950,7 @@
                             "type": "array",
                             "description": "Plný názov organizačnej zložky",
                             "items": {
-                              "$ref": "#/components/schemas/TimedValue"
+                              "$ref": "#/components/schemas/TimedValueEntry"
                             }
                           },
                           "addresses": {
@@ -1709,13 +1709,6 @@
           }
         }
       },
-      "TimedValue": {
-        "type": "array",
-        "description": "Hodnota mnohých atribútov sa môže časom meniť. Tento dátový typ uchováva všetky historické\nhodnoty atribútu, spoločne s informáciou od kedy a do kedy boli platné.",
-        "items": {
-          "$ref": "#/components/schemas/TimedValueEntry"
-        }
-      },
       "TimedValueEntry": {
         "type": "object",
         "properties": {
@@ -1736,13 +1729,6 @@
             "description": "Platnosť hodnoty do",
             "example": "2021-12-31"
           }
-        }
-      },
-      "TimedCodeValue": {
-        "type": "array",
-        "description": "Tento dátový typ je kombináciou `CodeValue` a `TimedValue`. Uchovávajú sa tu všetky historické\nhodnoty atribútu a ku každej aj jej číselníkový kód, označenie zdrojového číselníka, ako aj\ninformácia od kedy a do kedy bola hodnota platná.",
-        "items": {
-          "$ref": "#/components/schemas/TimedCodeValueEntry"
         }
       },
       "TimedCodeValueEntry": {
